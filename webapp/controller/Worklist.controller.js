@@ -22,8 +22,8 @@ sap.ui.define([
 		 * @public
 		 */
 		onInit: function() {
-
 			this._loadProductDetails();
+		
 		},
 
 		/* =========================================================== */
@@ -94,7 +94,7 @@ sap.ui.define([
 				var sQuery = oEvent.getParameter("query");
 
 				if (sQuery && sQuery.length > 0) {
-					aTableSearchState = [new Filter("Category", FilterOperator.Contains, sQuery)];
+					aTableSearchState = [new Filter("ProductID", FilterOperator.Contains, sQuery)];
 				}
 				this._applySearch(aTableSearchState);
 			}
@@ -189,11 +189,12 @@ sap.ui.define([
 			var oModel = this.getOwnerComponent().getModel();
 			oModel.read("/ProductSet", {
 				success: function(data) {
-					sap.m.MessageBox.show("Product Details Load Successfullty");
+					sap.m.MessageToast.show("Product Details Load Successfullty");
 					// console.log(data);
 				},
 				error: function(err) {}
 			});
+			
 		},
 		onPressDelete: function(oEvnt) {
 			var oTable = this.getView().byId("table"),
@@ -242,6 +243,33 @@ sap.ui.define([
 
 			}
 			oTable.removeSelections();
+		},
+		onPressSave : function(){
+			var oModel = this.getOwnerComponent().getModel(),
+			oTable= this.getView().byId("table"),
+			aSelItems= oTable.getSelectedItems();
+			if (aSelItems.length === 0) {
+				sap.m.MessageBox.error("Please Select One item to Save");
+				return;
+			}
+			else {
+				var mParameters = {
+				"groupId": "changes",
+				success: function(odata) {
+					sap.m.MessageBox.show("Product Details Saved Successfullty");
+				},
+				error: function(error) {}
+				};
+				oModel.submitChanges(mParameters);
+			}
+		},
+		onPressAddColumn : function(){
+			var oTable = this.getView().byId("table");
+			oTable.addColumn(new sap.m.Column({
+                                  header: new sap.m.Label({
+                                      text:"Description" //data[0].KURZNAME
+                                  })
+                              }));
 		}
 
 	});

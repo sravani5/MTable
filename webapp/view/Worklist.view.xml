@@ -12,6 +12,7 @@
 						<SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search="onSearch" width="auto"></SearchField>
 						<Button icon="sap-icon://add" press="onPressAdd"/>
 						<Button icon="sap-icon://delete" press="onPressDelete"></Button>
+						<Button text="Add Column" press="onPressAddColumn"/>
 					</Toolbar>
 				</headerToolbar>
 				<columns>
@@ -52,5 +53,12 @@
 				</items>
 			</Table>
 		</content>
+		<footer>
+			<Toolbar>
+			<ToolbarSpacer/>
+			<Button text="Save" press="onPressSave"/>
+			<Button text="Cancel" press="onCancelSave"/>
+			</Toolbar>
+		</footer>
 	</Page>
 </mvc:View>
