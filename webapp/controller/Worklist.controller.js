@@ -146,6 +146,7 @@ sap.ui.define([
 			var oTable = this.getView().byId("table");
 			var oContext = this.getView().getModel().createEntry("/ProductSet", {});
 			var items = this.oTemplateMultiAdd();
+			items.data("newRowData", "newRow");
 			items.setBindingContext(oContext);
 			oTable.addItem(items);
 		},
@@ -179,10 +180,10 @@ sap.ui.define([
 			});
 			return items;
 		},
-		onValueChage : function(oEvnt){
+		onValueChage: function(oEvnt) {
 			var Path = oEvnt.getSource().getBinding("value").sPath;
 			var oCntx = oEvnt.getSource().getParent().getBindingContext();
-				oCntx.getModel().setProperty(oCntx.getPath() + "/" + Path, oEvnt.getSource().getValue());
+			oCntx.getModel().setProperty(oCntx.getPath() + "/" + Path, oEvnt.getSource().getValue());
 		},
 		_loadProductDetails: function() {
 			var oModel = this.getOwnerComponent().getModel();
@@ -217,14 +218,19 @@ sap.ui.define([
 							$.each(aItems, function(i) {
 								var listItem = aItems[i],
 									sPath = listItem.getBindingContextPath();
-								oModel.remove(sPath, {
-									success: function(oData, oResponse) {
-										sap.m.MessageBox.show("Selected Line Item Deleted Successfully");
-									},
-									error: function(oError) {
-										sap.m.MessageBox.show("Error While Deleting Selected Line Items");
-									}
-								});
+								if (listItem.data("newRowData") === "newRow") {
+									oTable.removeItem(listItem);
+									oModel.deleteCreatedEntry(listItem.getBindingContext());
+								} else {
+									oModel.remove(sPath, {
+										success: function(oData, oResponse) {
+											sap.m.MessageBox.show("Selected Line Item Deleted Successfully");
+										},
+										error: function(oError) {
+											sap.m.MessageBox.show("Error While Deleting Selected Line Items");
+										}
+									});
+								}
 
 								// oTable.removeItem(listItem);
 								// oModel.resetChanges([sPath]);

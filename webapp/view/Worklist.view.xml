@@ -1,5 +1,5 @@
 <mvc:View controllerName="tab.ZMTable.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.f.semantic"
-	xmlns:footerbar="sap.ushell.ui.footerbar">
+	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:core="sap.ui.core">
 	<Page>
 		<content>
 			<Table id="table" width="auto" items="{ path: '/ProductSet', sorter: { path: 'Category', descending: false } }"
@@ -16,15 +16,27 @@
 				</headerToolbar>
 				<columns>
 					<Column>
+						<customData>
+							<core:CustomData key="p13nData" value='\{"columnKey": "Category", "leadingProperty": "Category"}'/>
+						</customData>
 						<Text text="Category"/>
 					</Column>
 					<Column>
+						<customData>
+							<core:CustomData key="p13nData" value='\{"columnKey": "ProductID", "leadingProperty": "ProductID"}'/>
+						</customData>
 						<Text text="ProductID"/>
 					</Column>
 					<Column>
+						<customData>
+							<core:CustomData key="p13nData" value='\{"columnKey": "TypeCode", "leadingProperty": "TypeCode"}'/>
+						</customData>
 						<Text text="Type Code"/>
 					</Column>
 					<Column>
+						<customData>
+							<core:CustomData key="p13nData" value='\{"columnKey": "Name", "leadingProperty": "Name"}'/>
+						</customData>
 						<Text text="Name"/>
 					</Column>
 				</columns>
