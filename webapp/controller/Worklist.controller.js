@@ -7,7 +7,7 @@ sap.ui.define([
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"sap/ui/export/Spreadsheet"
-], function(BaseController, JSONModel, History, formatter, Filter, FilterOperator,Spreadsheet) {
+], function(BaseController, JSONModel, History, formatter, Filter, FilterOperator, Spreadsheet) {
 	"use strict";
 
 	return BaseController.extend("tab.ZMTable.controller.Worklist", {
@@ -355,6 +355,54 @@ sap.ui.define([
 				.finally(function() {
 					oSheet.destroy();
 				});
+		},
+		onValueHelpRequest: function(oEvent) {
+			var sInputValue = oEvent.getSource().getValue(),
+				oView = this.getView();
+			if (!this._pValueHelpDialog) {
+				this._pValueHelpDialog = sap.ui.xmlfragment(this.getView().getId(), "tab.ZMTable.fragment.Productdetails",
+					this);
+				this.getView().addDependent(this._pValueHelpDialog);
+			}
+			// this._pValueHelpDialog.open();
+
+			// if (!this._pValueHelpDialog) {
+			// 	this._pValueHelpDialog = Fragment.load({
+			// 		id: oView.getId(),
+			// 		name: "sap.m.sample.InputAssisted.ValueHelpDialog",
+			// 		controller: this
+			// 	}).then(function (oDialog) {
+			// 		oView.addDependent(oDialog);
+			// 		return oDialog;
+			// 	});
+			// }
+			// this._pValueHelpDialog.then(function(oDialog) {
+			// 	// Create a filter for the binding
+			// 	oDialog.getBinding("items").filter([new Filter("Name", FilterOperator.Contains, sInputValue)]);
+			// 	// Open ValueHelpDialog filtered by the input's value
+			// 	oDialog.open(sInputValue);
+			// });
+			if (this._pValueHelpDialog) {
+				// Create a filter for the binding
+				this._pValueHelpDialog.getBinding("items").filter([new Filter("ProductID", FilterOperator.Contains, sInputValue)]);
+				// Open ValueHelpDialog filtered by the input's value
+				this._pValueHelpDialog.open(sInputValue);
+			}
+		},
+		onValueHelpClose: function(oEvent) {
+			var oSelectedItem = oEvent.getParameter("selectedItem");
+			oEvent.getSource().getBinding("items").filter([]);
+			if (!oSelectedItem) {
+				return;
+			}
+
+			this.byId("productInput").setValue(oSelectedItem.getTitle());
+		},
+		onValueHelpSearch: function(oEvent) {
+			var sValue = oEvent.getParameter("value");
+			var oFilter = new Filter("ProductID", FilterOperator.Contains, sValue);
+
+			oEvent.getSource().getBinding("items").filter([oFilter]);
 		}
 
 	});
