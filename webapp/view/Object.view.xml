@@ -1,38 +1,88 @@
-<mvc:View
-	controllerName="tab.ZMTable.controller.Object"
-	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic"
-	xmlns:footerbar="sap.ushell.ui.footerbar">
-
-	<semantic:SemanticPage
-		id="page"
-		headerPinnable="false"
-		toggleHeaderOnTitleClick="false"
-		busy="{objectView>/busy}"
-		busyIndicatorDelay="{objectView>/delay}">
-
-		<semantic:titleHeading>
-			<Title text="{Category}" />
-		</semantic:titleHeading>
-
-		<semantic:headerContent>
-			<ObjectNumber
-			/>
-		</semantic:headerContent>
-
-		<semantic:sendEmailAction>
-			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
-		</semantic:sendEmailAction>
-
-		<semantic:shareInJamAction>
-			<semantic:ShareInJamAction id="shareInJam" visible="{FLP>/isShareInJamActive}" press="onShareInJamPress"/>
-		</semantic:shareInJamAction>
-
-		<semantic:saveAsTileAction>
-			<footerbar:AddBookmarkButton id ="shareTile" title="{objectView>/saveAsTileTitle}" />
-		</semantic:saveAsTileAction>
-
-	</semantic:SemanticPage>
-
+<mvc:View controllerName="tab.ZMTable.controller.Object" xmlns:m="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.f.semantic"
+	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:core="sap.ui.core" xmlns="sap.uxap" xmlns:layout="sap.ui.layout">
+	<ObjectPageLayout id="ObjectPageLayout" enableLazyLoading="true" upperCaseAnchorBar="false">
+		<headerTitle>
+			<!--<ObjectPageHeader>-->
+			<ObjectPageDynamicHeaderTitle>
+				<breadcrumbs>
+					<m:Breadcrumbs>
+						<m:Link text="Page 1 a very long link" press="handleLink1Press"/>
+						<m:Link text="Page 2 long link" press="handleLink2Press"/>
+					</m:Breadcrumbs>
+				</breadcrumbs>
+				<expandedHeading>
+					<m:Title text="Denise Smith" wrapping="true"/>
+				</expandedHeading>
+				<snappedHeading>
+					<m:FlexBox fitContainer="true" alignItems="Center">
+						<m:Title text="Denise Smith" wrapping="true"/>
+					</m:FlexBox>
+				</snappedHeading>
+				<expandedContent>
+					<m:Text text="Senior UI Developer"/>
+				</expandedContent>
+				<snappedContent>
+					<m:Text text="Senior UI Developer"/>
+				</snappedContent>
+				<!--<snappedTitleOnMobile>-->
+				<!--	<m:Title text="Header Title On Phone"/>-->
+				<!--</snappedTitleOnMobile>-->
+				<actions>
+					<ObjectPageHeaderActionButton text="Edit" type="Emphasized" hideText="false"/>
+					<ObjectPageHeaderActionButton type="Transparent" text="Delete" hideText="false" hideIcon="true"/>
+					<ObjectPageHeaderActionButton type="Transparent" text="Copy" hideText="false" hideIcon="true"/>
+					<ObjectPageHeaderActionButton icon="sap-icon://action" type="Transparent" text="Share" tooltip="action"/>
+				</actions>
+			</ObjectPageDynamicHeaderTitle>
+			<!--</ObjectPageHeader>-->
+		</headerTitle>
+		<headerContent>
+			<m:FlexBox wrap="Wrap">
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+					<m:ObjectStatus title="User ID" text="12345678"/>
+					<m:ObjectStatus title="Language" text="English"/>
+					<m:ObjectStatus title="Country" text="USA"/>
+					<m:ObjectStatus title="Phone Number" text="1-844-726-7733"/>
+				</layout:VerticalLayout>
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+					<m:ObjectStatus title="Functional Area" text="Developement"/>
+					<m:ObjectStatus title="Cost Center" text="PI DFA GD Programs and Product"/>
+					<m:ObjectStatus title="Email" text="email@address.com"/>
+				</layout:VerticalLayout>
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+					<layout:layoutData>
+						<ObjectPageHeaderLayoutData visibleS="false" visibleM="false"/>
+					</layout:layoutData>
+					<m:ObjectStatus text="Senior UI Developer" state="Success"/>
+					<m:RatingIndicator maxValue="6" value="5" tooltip="Rating Tooltip"/>
+				</layout:VerticalLayout>
+			</m:FlexBox>
+		</headerContent>
+		<sections>
+			<ObjectPageSection title="Personal">
+				<subSections>
+					<ObjectPageSubSection title="Personal">
+						<blocks>
+							<core:Fragment fragmentName="tab.ZMTable.fragment.Personal" type="XML"/>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection title="Employement">
+				<subSections>
+					<ObjectPageSubSection title="Employment">
+						<blocks>
+							<core:Fragment fragmentName="tab.ZMTable.fragment.Employment" type="XML"/>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+		<!--<footer>-->
+		<!--	<Toolbar>-->
+		<!--		<ToolbarSpacer/>-->
+		<!--		<Button icon="sap-icon://create-form" text="Create Ticket" type="Default" press="onCreateTicket"/>-->
+		<!--	</Toolbar>-->
+		<!--</footer>-->
+	</ObjectPageLayout>
 </mvc:View>

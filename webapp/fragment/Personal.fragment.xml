@@ -1,0 +1,31 @@
+
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="SimpleFormDisplay480_Trial" editable="false" layout="ResponsiveGridLayout" title="Address" labelSpanXL="4" labelSpanL="4"
+			labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3"
+			columnsL="2" columnsM="2" singleContainerFullSize="false">
+			<f:content>
+				<core:Title text="Addresses"/>
+				<Label text="Home Address"/>
+				<Text text="2096 Mission Street"/>
+				<Label text="Home Mailing Address"/>
+				<Text text="PO Box 32114"/>
+				<Label text="Office Address"/>
+				<Text text="4311 Green Street"/>
+				<Label text="Office Mailing Address"/>
+				<Text text="PO Box 95493"/>
+				<core:Title text="Social Accounts"/>
+				<Label text="LinkedIn"/>
+				<Text text="DeniseSmith"/>
+				<Label text="Twitter"/>
+				<Text text="@DeniseSmith"/>
+				<Label text="Email"/>
+				<Text text="Email"/>
+				<Label text="Facebook."/>
+				<Text text="Facebook"/>
+				<Label text="SMS"/>
+				<Text text="Sms"/>
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+</core:FragmentDefinition>
