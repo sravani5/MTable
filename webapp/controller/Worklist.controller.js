@@ -5,8 +5,9 @@ sap.ui.define([
 	"sap/ui/core/routing/History",
 	"tab/ZMTable/model/formatter",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function(BaseController, JSONModel, History, formatter, Filter, FilterOperator) {
+	"sap/ui/model/FilterOperator",
+	"sap/ui/export/Spreadsheet"
+], function(BaseController, JSONModel, History, formatter, Filter, FilterOperator,Spreadsheet) {
 	"use strict";
 
 	return BaseController.extend("tab.ZMTable.controller.Worklist", {
@@ -23,7 +24,7 @@ sap.ui.define([
 		 */
 		onInit: function() {
 			this._loadProductDetails();
-		
+
 		},
 
 		/* =========================================================== */
@@ -194,7 +195,7 @@ sap.ui.define([
 				},
 				error: function(err) {}
 			});
-			
+
 		},
 		onPressDelete: function(oEvnt) {
 			var oTable = this.getView().byId("table"),
@@ -244,32 +245,116 @@ sap.ui.define([
 			}
 			oTable.removeSelections();
 		},
-		onPressSave : function(){
+		onPressSave: function() {
 			var oModel = this.getOwnerComponent().getModel(),
-			oTable= this.getView().byId("table"),
-			aSelItems= oTable.getSelectedItems();
+				oTable = this.getView().byId("table"),
+				aSelItems = oTable.getSelectedItems();
 			if (aSelItems.length === 0) {
 				sap.m.MessageBox.error("Please Select One item to Save");
 				return;
-			}
-			else {
+			} else {
 				var mParameters = {
-				"groupId": "changes",
-				success: function(odata) {
-					sap.m.MessageBox.show("Product Details Saved Successfullty");
-				},
-				error: function(error) {}
+					"groupId": "changes",
+					success: function(odata) {
+						sap.m.MessageBox.show("Product Details Saved Successfullty");
+					},
+					error: function(error) {}
 				};
 				oModel.submitChanges(mParameters);
 			}
 		},
-		onPressAddColumn : function(){
+		onPressAddColumn: function() {
 			var oTable = this.getView().byId("table");
 			oTable.addColumn(new sap.m.Column({
-                                  header: new sap.m.Label({
-                                      text:"Description" //data[0].KURZNAME
-                                  })
-                              }));
+				header: new sap.m.Label({
+					text: "Description" //data[0].KURZNAME
+				})
+			}));
+		},
+		handleValueChange: function() {
+			var oFileUpId = this.byId("fileUpload"),
+				domRef = oFileUpId.getFocusDomRef(),
+				file = domRef.files[0];
+			oFileUpId.clear();
+			this._import(file);
+		},
+		_creatobjPy: function(Data) {
+			var excelArray = [];
+			for (var i = 0; i < Data.length; i++) {
+				var data = Data[i];
+				var oExcelJson = {};
+				oExcelJson.Category = data["Category"] ? data["Category"].trim() : "";
+				oExcelJson.ProductID = data["Product ID"] ? data["Product ID"].trim() : "";
+				oExcelJson.TypeCode = data["Type Code"] ? data["Type Code"].trim() : "";
+				oExcelJson.Name = data["Name"] ? data["Name"].trim() : "";
+
+				excelArray.push(oExcelJson);
+
+			}
+			var oModel = this.getOwnerComponent().getModel();
+			var oTable = this.getView().byId("table");
+			var that = this;
+			$.each(excelArray, function(i, val) {
+				var oContext = oModel.createEntry("/ProductSet", {
+					properties: val
+				});
+				var items = that.oTemplateMultiAdd();
+				items.setBindingContext(oContext);
+				oTable.addItem(items);
+
+			});
+
+			// sap.m.MessageToast.show("Excel data Loaded");
+		},
+
+		createColumnConfig: function() {
+			return [{
+				label: "Category",
+				property: "Category",
+				type: 'number'
+			}, {
+				label: "Product ID",
+				property: "ProductID",
+				type: 'string'
+			}, {
+				label: "Type Code",
+				property: "TypeCode",
+				type: 'string'
+			}, {
+				label: "Name",
+				property: "Name",
+				type: 'date'
+			}, {
+				label: "Name1",
+				property: "Destructiondue",
+				type: 'date'
+			}];
+
+		},
+		onExportDownload: function(oEvnt) {
+			var aCols, oSettings, oSheet, oExcelJson = [];
+			oExcelJson.push({
+				Category: "",
+				ProductID: "",
+				TypeCode: "",
+				Name: ""
+			});
+			aCols = this.createColumnConfig();
+			oSettings = {
+				workbook: {
+					columns: aCols
+				},
+				dataSource: oExcelJson
+			};
+
+			oSheet = new Spreadsheet(oSettings);
+			oSheet.build()
+				.then(function() {
+					sap.m.MessageToast.show('Spreadsheet export has finished');
+				})
+				.finally(function() {
+					oSheet.destroy();
+				});
 		}
 
 	});

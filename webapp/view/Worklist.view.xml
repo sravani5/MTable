@@ -1,5 +1,5 @@
 <mvc:View controllerName="tab.ZMTable.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.f.semantic"
-	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:core="sap.ui.core">
+	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified">
 	<Page>
 		<content>
 			<Table id="table" width="auto" items="{ path: '/ProductSet', sorter: { path: 'Category', descending: false } }"
@@ -13,6 +13,9 @@
 						<Button icon="sap-icon://add" press="onPressAdd"/>
 						<Button icon="sap-icon://delete" press="onPressDelete"></Button>
 						<Button text="Add Column" press="onPressAddColumn"/>
+						<u:FileUploader id="fileUpload" iconOnly="true" tooltip="Upload" icon="sap-icon://upload" name="IUpload" uploadUrl="upload/"
+							uploadComplete="handleUploadFile" change="handleValueChange" buttonOnly="true"/>
+						<Button icon="sap-icon://excel-attachment" press="onExportDownload"/>
 					</Toolbar>
 				</headerToolbar>
 				<columns>
@@ -55,9 +58,9 @@
 		</content>
 		<footer>
 			<Toolbar>
-			<ToolbarSpacer/>
-			<Button text="Save" press="onPressSave"/>
-			<Button text="Cancel" press="onCancelSave"/>
+				<ToolbarSpacer/>
+				<Button text="Save" press="onPressSave"/>
+				<Button text="Cancel" press="onCancelSave"/>
 			</Toolbar>
 		</footer>
 	</Page>

@@ -84,6 +84,13 @@
 				}
 			}
 		},
+		"resources": {
+			"js": [{
+				"uri": "util/jszip.js"
+			}, {
+				"uri": "util/xlsx.js"
+			}]
+		},
 		"routing": {
 			"config": {
 				"routerClass": "sap.m.routing.Router",
@@ -98,22 +105,19 @@
 				},
 				"async": true
 			},
-			"routes": [
-				{
-					"pattern": "",
-					"name": "worklist",
-					"target": [
-						"worklist"
-					]
-				},
-				{
-					"pattern": "ProductSet/{objectId}",
-					"name": "object",
-					"target": [
-						"object"
-					]
-				}
-			],
+			"routes": [{
+				"pattern": "",
+				"name": "worklist",
+				"target": [
+					"worklist"
+				]
+			}, {
+				"pattern": "ProductSet/{objectId}",
+				"name": "object",
+				"target": [
+					"object"
+				]
+			}],
 			"targets": {
 				"worklist": {
 					"viewName": "Worklist",
