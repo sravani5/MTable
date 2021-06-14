@@ -2,7 +2,11 @@
 	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified">
 	<Page>
 		<content>
-			<Input id="productInput" width="100%" showSuggestion="true" showValueHelp="true" suggestionItems="{/ProductSet}"
+			<List headerText="Sales Orders" items="{ path: 'Demo>/SalesOrderCollection' }">
+				<StandardListItem title="{Demo>SalesOrderID}" description="{Demo>DeliveryStatusDescription}"/>
+			</List>
+			<!--<Text text="{Demo>/SalesOrderCollection0/SalesOrderID}"/>-->
+			<Input id="productInput" width="50%" showSuggestion="true" showValueHelp="true" suggestionItems="{/ProductSet}"
 				valueHelpRequest=".onValueHelpRequest">
 				<suggestionItems>
 					<core:Item text="{Category}"/>

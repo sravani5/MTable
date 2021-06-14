@@ -36,6 +36,11 @@
       "templateId": "sap.ui.ui5-template-plugin.1worklist",
       "templateVersion": "1.52.7",
       "dateTimeStamp": "Sun, 06 Jun 2021 06:17:39 GMT"
+    },
+    {
+      "templateId": "servicecatalog.connectivityComponent",
+      "templateVersion": "0.0.0",
+      "dateTimeStamp": "Mon, 14 Jun 2021 04:50:50 GMT"
     }
   ],
   "translation": {
@@ -46,7 +51,7 @@
     "resourceModelName": "i18n"
   },
   "mockpreview": {
-    "mockUri": "/sap/opu/odata/iwbep/GWSAMPLE_BASIC",
+    "mockUri": "/sap/opu/odata/iwbep/GWDEMO",
     "metadataFilePath": "",
     "loadJSONFiles": false,
     "loadCustomRequests": false,

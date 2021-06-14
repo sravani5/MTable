@@ -17,11 +17,19 @@
 					"odataVersion": "2.0",
 					"localUri": "localService/metadata.xml"
 				}
+			},
+			"GWDEMO": {
+				"uri": "/sap/opu/odata/iwbep/GWDEMO/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/GWDEMO/metadata.xml"
+				}
 			}
 		},
 		"sourceTemplate": {
-			"id": "sap.ui.ui5-template-plugin.1worklist",
-			"version": "1.52.7"
+			"id": "servicecatalog.connectivityComponent",
+			"version": "0.0.0"
 		}
 	},
 	"sap.ui": {
@@ -50,13 +58,13 @@
 		"dependencies": {
 			"minUI5Version": "1.42.0",
 			"libs": {
-				"sap.ui.core": {},
-				"sap.m": {},
-				"sap.f": {},
-				"sap.ushell": {},
 				"sap.collaboration": {
 					"lazy": true
-				}
+				},
+				"sap.f": {},
+				"sap.m": {},
+				"sap.ui.core": {},
+				"sap.ushell": {}
 			}
 		},
 		"contentDensities": {
@@ -73,6 +81,16 @@
 			"": {
 				"dataSource": "mainService",
 				"preload": true
+			},
+			"Demo": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "GWDEMO",
+				"preload": true
 			}
 		},
 		"services": {
@@ -85,11 +103,14 @@
 			}
 		},
 		"resources": {
-			"js": [{
-				"uri": "util/jszip.js"
-			}, {
-				"uri": "util/xlsx.js"
-			}]
+			"js": [
+				{
+					"uri": "util/jszip.js"
+				},
+				{
+					"uri": "util/xlsx.js"
+				}
+			]
 		},
 		"routing": {
 			"config": {
@@ -105,19 +126,22 @@
 				},
 				"async": true
 			},
-			"routes": [{
-				"pattern": "",
-				"name": "worklist",
-				"target": [
-					"worklist"
-				]
-			}, {
-				"pattern": "ProductSet/{objectId}",
-				"name": "object",
-				"target": [
-					"object"
-				]
-			}],
+			"routes": [
+				{
+					"pattern": "",
+					"name": "worklist",
+					"target": [
+						"worklist"
+					]
+				},
+				{
+					"pattern": "ProductSet/{objectId}",
+					"name": "object",
+					"target": [
+						"object"
+					]
+				}
+			],
 			"targets": {
 				"worklist": {
 					"viewName": "Worklist",

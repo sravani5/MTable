@@ -23,6 +23,7 @@ sap.ui.define([
 		 * @public
 		 */
 		onInit: function() {
+			var oSalesoreder = this.getModel("Demo");
 			this._loadProductDetails();
 
 		},
